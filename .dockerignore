@@ -1,0 +1,6 @@
+# third party deps
+
+lib/nginx*
+lib/boringssl
+lib/pcre*
+lib/zlib*
