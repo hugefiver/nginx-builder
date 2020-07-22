@@ -21,13 +21,12 @@ COPY conf/nginx.conf /tmp/nginx/etc/nginx/
 FROM base
 
 WORKDIR /tmp/build
-RUN useradd --system nginx
-RUN mkdir -p /etc/nginx/conf.d /opt/nginx /var/log/nginx \
-    /usr/lib64/nginx /opt/nginx/log
+RUN useradd --system -U nginx
+RUN mkdir -p /etc/nginx/conf.d /usr/lib64/nginx \
+    # /opt/nginx /var/log/nginx /opt/nginx/log
 # COPY --from=build /build/lib/nginx*/conf /etc/nginx/
 # COPY --from=build /build/lib/nginx*/objs/nginx /opt/nginx/
 COPY --from=build /tmp/nginx /
-RUN ln -sf /opt/nginx/nginx /sbin/nginx && \
-    ln -sf /opt/nginx/nginx /usr/bin/nginx 
+RUN ln -sf /usr/sbin/nginx /sbin/nginx
 
-ENTRYPOINT [ "/opt/nginx/nginx"]
+ENTRYPOINT ["nginx"]
