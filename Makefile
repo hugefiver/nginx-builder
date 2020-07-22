@@ -69,7 +69,7 @@ build:
 		--conf-path=/etc/nginx/nginx.conf \
 		--error-log-path=/var/log/nginx/error.log \
 		--http-log-path=/var/log/nginx/access.log \
-		--with-cc-opt="-static -static-libgcc" \
+		--with-cc-opt="-static -O2" \
 		--with-ld-opt="-static" \
 		--with-file-aio \
 		--with-stream \
