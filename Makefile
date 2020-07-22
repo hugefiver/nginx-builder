@@ -31,7 +31,7 @@ clean:
 
 dep: get-nginx get-ssl get-zlib get-pcre
 get-nginx:
-	wget $(nginx_url) -O $(nginx_file)
+	curl $(nginx_url) -o $(nginx_file)
 	tar zxf $(nginx_file) -C lib
 	rm $(nginx_file)
 
@@ -39,12 +39,12 @@ get-ssl:
 	git clone --depth 1 https://github.com/google/boringssl.git $(lib_path)/$(boringssl)
 
 get-zlib:
-	wget $(zlib_url) -O $(zlib_file)
+	curl $(zlib_url) -o $(zlib_file)
 	tar zxf $(zlib_file) -C lib
 	rm $(zlib_file)
 
 get-pcre:
-	wget $(pcre_url) -O $(pcre_file)
+	curl $(pcre_url) -o $(pcre_file)
 	tar zxf $(pcre_file) -C lib
 	rm $(pcre_file)
 
