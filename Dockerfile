@@ -6,10 +6,7 @@ RUN dnf install -y make cmake clang git golang
 WORKDIR /build
 ADD . .
 
-RUN make clean && make dep
-RUN export CC=clang CXX=clang++ && \
-    make set-pcre && \
-    make build-ssl
+RUN make clean
 RUN export CC=clang CXX=clang++ && \
     make build && \
     make DESTDIR=/tmp/nginx install
