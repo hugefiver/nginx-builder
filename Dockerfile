@@ -7,7 +7,7 @@ WORKDIR /build
 ADD . .
 
 RUN make clean && make dep
-RUN export CC=clang CXX=clang++ && \
+RUN export CC=clang CXX=clang++ compile_process=4 && \
     make build && \
     make DESTDIR=/tmp/nginx install
 COPY conf/nginx.conf /tmp/nginx/etc/nginx/
