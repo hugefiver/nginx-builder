@@ -17,12 +17,12 @@ jobs:
         uses: actions/checkout@v2
 
       - 
-        name: Get Deps
-        run: make clean && make dep
-
-      - 
         name: Get development tools
         run: sudo apt install golang cmake git gcc -y
+
+      - 
+        name: Clean deps
+        run: make clean
 
       - 
         name: Build
