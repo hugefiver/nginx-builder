@@ -63,12 +63,12 @@ build-ssl:
 	cd $(lib_path)/$(boringssl) && \
 		mkdir -p build .openssl/{lib,include}
 	cd $(lib_path)/$(boringssl) && \
-		ln -sf `pwd`/include/openssl .openssl/include/ \
+		ln -sf `pwd`/include .openssl/include \
 		# && touch .openssl/include/openssl/ssl.h
 	cd $(lib_path)/$(boringssl) && cmake -S ./ -B build/ -DCMAKE_BUILD_TYPE=Release
 	cd $(lib_path)/$(boringssl) && make -C build/ -j $(compile_process)
 	cd $(lib_path)/$(boringssl) && \
-	cp build/crypto/libcrypto.a build/ssl/libssl.a .openssl/lib
+		cp build/crypto/libcrypto.a build/ssl/libssl.a .openssl/lib
 
 set-pcre:
 	cd $(lib_path)/$(pcre) && \
