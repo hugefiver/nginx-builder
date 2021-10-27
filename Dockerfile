@@ -6,7 +6,7 @@ RUN dnf install -y make cmake clang git golang
 WORKDIR /build
 ADD . .
 
-RUN make dep
+RUN make clean && make dep
 RUN export CC=clang CXX=clang++ && \
     make build-pcre && \
     make build-ssl

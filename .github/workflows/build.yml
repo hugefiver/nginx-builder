@@ -18,7 +18,7 @@ jobs:
 
       - 
         name: Get Deps
-        run: make dep
+        run: make clean && make dep
 
       - 
         name: Get development tools
