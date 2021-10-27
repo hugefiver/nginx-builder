@@ -1,6 +1,6 @@
 .PHONY: dep get-nginx get-ssl build-ssl
 
-compile_process = 4
+compile_process ?= 1
 
 group = nginx
 user = nginx
@@ -8,22 +8,28 @@ user = nginx
 base_pass = $(PWD)
 lib_path = lib
 
-nginx = nginx-1.18.0
+nginx = nginx-1.20.1
 nginx_path = $(lib_path)/$(nginx)
-nginx_url = http://nginx.org/download/nginx-1.18.0.tar.gz
+nginx_url = http://nginx.org/download/nginx-1.20.1.tar.gz
 nginx_file = lib/nginx.tar.gz
 
 zlib = zlib-1.2.11
 zlib_url = http://zlib.net/zlib-1.2.11.tar.gz
 zlib_file = lib/zlib.tar.gz
 
-pcre = pcre-8.43
-pcre_url = https://ftp.pcre.org/pub/pcre/pcre-8.43.tar.gz
-pcre_file = lib/pcre-8.44.tar.gz
+pcre = pcre-8.45
+pcre_url = https://ftp.pcre.org/pub/pcre/pcre-8.45.tar.gz
+pcre_file = lib/pcre-8.45.tar.gz
+
+aio = libaio
+aio_url = https://pagure.io/libaio/archive/libaio-0.3.112/libaio-libaio-0.3.112.tar.gz
+aio_file = lib/libaio.tar.gz
 
 boringssl = boringssl
 ssl_lib = $(boringssl)/.openssl/lib
 ssl_include = $(boringssl)/.openssl/include/openssl
+
+.DEFAULT_GOAL := build
 
 clean:
 	cd $(lib_path); \
@@ -48,7 +54,12 @@ get-pcre:
 	tar zxf $(pcre_file) -C lib
 	rm $(pcre_file)
 
-build-ssl:
+# get-aio:
+# 	curl $(aio_url) -o $(aio_file)
+# 	mkdir ./lib/$(aio)
+# 	tar zxvf $(aio_file) -C ./lib/$(aio)
+
+build-ssl: get-ssl
 	cd $(lib_path)/$(boringssl) && \
 		mkdir -p build .openssl/{lib,include}
 	cd $(lib_path)/$(boringssl) && \
@@ -57,9 +68,13 @@ build-ssl:
 	cd $(lib_path)/$(boringssl) && cmake -S ./ -B build/ -DCMAKE_BUILD_TYPE=Release
 	cd $(lib_path)/$(boringssl) && make -C build/ -j $(compile_process)
 	cd $(lib_path)/$(boringssl) && \
-		cp build/crypto/libcrypto.a build/ssl/libssl.a .openssl/lib
+	cp build/crypto/libcrypto.a build/ssl/libssl.a .openssl/lib
 
-build: 
+set-pcre: get-pcre
+	cd $(lib_path)/$(pcre) && \
+	./configure --enable-jit 
+
+build: dep set-pcre build-ssl
 	cd $(nginx_path) && \
 	./configure \
 		--prefix=/opt/nginx \
@@ -69,8 +84,6 @@ build:
 		--conf-path=/etc/nginx/nginx.conf \
 		--error-log-path=/var/log/nginx/error.log \
 		--http-log-path=/var/log/nginx/access.log \
-		--with-cc-opt="-static -O2" \
-		--with-ld-opt="-static" \
 		--with-file-aio \
 		--with-stream \
 		--with-stream_ssl_module \

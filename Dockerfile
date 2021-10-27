@@ -2,12 +2,13 @@ FROM fedora:latest AS base
 
 FROM base AS build
 
-RUN dnf install -y make cmake clang git golang glibc-static libstdc++-static
+RUN dnf install -y make cmake clang git golang
 WORKDIR /build
 ADD . .
 
 RUN make dep
 RUN export CC=clang CXX=clang++ && \
+    make build-pcre && \
     make build-ssl
 RUN export CC=clang CXX=clang++ && \
     make build && \
@@ -18,7 +19,7 @@ COPY conf/nginx.conf /tmp/nginx/etc/nginx/
 FROM base
 
 WORKDIR /tmp/build
-RUN useradd --system -U nginx
+RUN useradd --system -M -U -s /bin/nologin nginx
 RUN mkdir -p /etc/nginx/conf.d /usr/lib64/nginx 
     # /opt/nginx /var/log/nginx /opt/nginx/log
 # COPY --from=build /build/lib/nginx*/conf /etc/nginx/
