@@ -59,7 +59,7 @@ get-pcre:
 # 	mkdir ./lib/$(aio)
 # 	tar zxvf $(aio_file) -C ./lib/$(aio)
 
-build-ssl: get-ssl
+build-ssl:
 	cd $(lib_path)/$(boringssl) && \
 		mkdir -p build .openssl/{lib,include}
 	cd $(lib_path)/$(boringssl) && \
@@ -70,7 +70,7 @@ build-ssl: get-ssl
 	cd $(lib_path)/$(boringssl) && \
 	cp build/crypto/libcrypto.a build/ssl/libssl.a .openssl/lib
 
-set-pcre: get-pcre
+set-pcre:
 	cd $(lib_path)/$(pcre) && \
 	./configure --enable-jit 
 
