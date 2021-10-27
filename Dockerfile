@@ -8,7 +8,7 @@ ADD . .
 
 RUN make clean && make dep
 RUN export CC=clang CXX=clang++ && \
-    make build-pcre && \
+    make set-pcre && \
     make build-ssl
 RUN export CC=clang CXX=clang++ && \
     make build && \
