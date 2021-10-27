@@ -21,8 +21,8 @@ jobs:
         run: sudo apt install golang cmake git gcc -y
 
       - 
-        name: Clean deps
-        run: make clean
+        name: Get deps
+        run: make clean && make dep
 
       - 
         name: Build

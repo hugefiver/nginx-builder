@@ -74,7 +74,7 @@ set-pcre:
 	cd $(lib_path)/$(pcre) && \
 	./configure --enable-jit 
 
-build: dep set-pcre build-ssl
+build: set-pcre build-ssl
 	cd $(nginx_path) && \
 	./configure \
 		--prefix=/opt/nginx \
