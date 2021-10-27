@@ -61,7 +61,7 @@ get-pcre:
 
 build-ssl:
 	cd $(lib_path)/$(boringssl) && \
-		mkdir -p build .openssl/{lib,include}
+		mkdir -p build .openssl/lib
 	cd $(lib_path)/$(boringssl) && \
 		ln -sf `pwd`/include .openssl/include \
 		# && touch .openssl/include/openssl/ssl.h
