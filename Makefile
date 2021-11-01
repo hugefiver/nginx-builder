@@ -109,5 +109,5 @@ build: set-pcre build-ssl
 	cd $(nginx_path) && \
 		make -j $(compile_process)
 
-install: build
+install: 
 	$(MAKE) -C $(nginx_path) install
