@@ -22,6 +22,10 @@ pcre = pcre-8.45
 pcre_url = https://ftp.pcre.org/pub/pcre/pcre-8.45.tar.gz
 pcre_file = lib/pcre-8.45.tar.gz
 
+brotli = brotli
+brotli_url = https://github.com/google/ngx_brotli.git
+brotli_lib = lib/brotli
+
 aio = libaio
 aio_url = https://pagure.io/libaio/archive/libaio-0.3.112/libaio-libaio-0.3.112.tar.gz
 aio_file = lib/libaio.tar.gz
@@ -54,6 +58,9 @@ get-pcre:
 	curl $(pcre_url) -o $(pcre_file)
 	tar zxf $(pcre_file) -C lib
 	rm $(pcre_file)
+
+get-brotli:
+	git clone --depth 1 $(brotli_url) $(brotli_lib)
 
 # get-aio:
 # 	curl $(aio_url) -o $(aio_file)
@@ -96,7 +103,8 @@ build: set-pcre build-ssl
 		--with-http_addition_module \
 		--with-pcre=../$(pcre) --with-pcre-jit \
 		--with-zlib=../$(zlib) \
-		--with-openssl=../$(boringssl)
+		--with-openssl=../$(boringssl) \
+		--add-module=../$(brotli_lib)
 	touch $(lib_path)/$(boringssl)/include/openssl/ssl.h
 	cd $(nginx_path) && \
 		make -j $(compile_process)
