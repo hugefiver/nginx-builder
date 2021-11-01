@@ -104,7 +104,7 @@ build: set-pcre build-ssl
 		--with-pcre=../$(pcre) --with-pcre-jit \
 		--with-zlib=../$(zlib) \
 		--with-openssl=../$(boringssl) \
-		--add-module=../$(brotli_lib)
+		--add-module=../$(brotli)
 	touch $(lib_path)/$(boringssl)/include/openssl/ssl.h
 	cd $(nginx_path) && \
 		make -j $(compile_process)
