@@ -38,7 +38,7 @@ ssl_include = $(boringssl)/.openssl/include/openssl
 
 clean:
 	cd $(lib_path); \
-	rm -rf $(nginx_file) $(nginx) $(boringssl) $(zlib) $(pcre)
+	rm -rf $(nginx_file) $(nginx) $(boringssl) $(zlib) $(pcre) $(brotli)
 
 dep: get-nginx get-ssl get-zlib get-pcre get-brotli
 
