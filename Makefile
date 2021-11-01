@@ -1,4 +1,4 @@
-.PHONY: dep get-nginx get-ssl build-ssl get-zlib get-pcre set-pcre build install clean
+.PHONY: dep get-nginx get-ssl build-ssl get-zlib get-pcre get-brotli set-pcre build install clean
 
 PROCS ?= 1
 compile_process := $(PROCS)
