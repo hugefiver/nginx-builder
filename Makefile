@@ -40,7 +40,7 @@ clean:
 	cd $(lib_path); \
 	rm -rf $(nginx_file) $(nginx) $(boringssl) $(zlib) $(pcre) $(brotli)
 
-dep: get-nginx get-ssl get-zlib get-pcre
+dep: get-nginx get-ssl get-zlib get-pcre get-brotli
 get-nginx:
 	curl $(nginx_url) -o $(nginx_file)
 	tar zxf $(nginx_file) -C lib
