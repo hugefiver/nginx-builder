@@ -1,4 +1,4 @@
-.PHONY: dep get-nginx get-ssl build-ssl get-zlib get-pcre set-pcre build install clean
+.PHONY: dep get-nginx get-ssl build-ssl get-zlib get-brotli get-pcre set-pcre build install clean
 
 PROCS ?= 1
 compile_process := $(PROCS)
@@ -22,6 +22,10 @@ pcre = pcre-8.45
 pcre_url = https://ftp.pcre.org/pub/pcre/pcre-8.45.tar.gz
 pcre_file = lib/pcre-8.45.tar.gz
 
+brotli = brotli
+brotli_url = https://github.com/google/ngx_brotli.git
+brotli_lib = lib/brotli
+
 aio = libaio
 aio_url = https://pagure.io/libaio/archive/libaio-0.3.112/libaio-libaio-0.3.112.tar.gz
 aio_file = lib/libaio.tar.gz
@@ -36,7 +40,7 @@ clean:
 	cd $(lib_path); \
 	rm -rf $(nginx_file) $(nginx) $(boringssl) $(zlib) $(pcre)
 
-dep: get-nginx get-ssl get-zlib get-pcre
+dep: get-nginx get-ssl get-zlib get-pcre get-brotli
 
 get-nginx:
 	git clone --depth 1 https://github.com/VKCOM/nginx-quic.git $(nginx_path)
@@ -74,6 +78,9 @@ set-pcre:
 	cd $(lib_path)/$(pcre) && \
 	./configure --enable-jit 
 
+get-brotli:
+	git clone --depth 1 $(brotli_url) $(brotli_lib)
+
 build: set-pcre build-ssl
 	cd $(nginx_path) && \
 	./auto/configure \
@@ -99,7 +106,8 @@ build: set-pcre build-ssl
 		--with-stream_quic_module \
 		--with-pcre=../$(pcre) --with-pcre-jit \
 		--with-zlib=../$(zlib) \
-		--with-openssl=../$(boringssl)
+		--with-openssl=../$(boringssl)\
+		--add-module=../$(brotli_lib)
 	touch $(lib_path)/$(boringssl)/include/openssl/ssl.h
 	cd $(nginx_path) && \
 		make -j $(compile_process)
