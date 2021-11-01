@@ -1,6 +1,7 @@
-.PHONY: dep get-nginx get-ssl build-ssl
+.PHONY: dep get-nginx get-ssl build-ssl get-zlib get-pcre set-pcre build install clean
 
-compile_process ?= 1
+PROCS ?= 1
+compile_process := $(PROCS)
 
 group = nginx
 user = nginx
