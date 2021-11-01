@@ -75,7 +75,7 @@ set-pcre:
 
 build: set-pcre build-ssl
 	cd $(nginx_path) && \
-	./configure \
+	./auto/configure \
 		--prefix=/opt/nginx \
 		--sbin-path=/usr/sbin/nginx \
 		--user=nginx --group=nginx \
