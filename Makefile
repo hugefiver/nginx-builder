@@ -60,8 +60,10 @@ get-pcre:
 	rm $(pcre_file)
 
 get-brotli:
-	git clone --depth 1 $(brotli_url) $(brotli_lib) && \
-		git submodule update --init
+	git clone --depth 1 $(brotli_url) $(brotli_lib)
+	cd $(brotli_lib) && \
+		git submodule update --init && \
+		chmod +x config filter/config static/config
 
 # get-aio:
 # 	curl $(aio_url) -o $(aio_file)
