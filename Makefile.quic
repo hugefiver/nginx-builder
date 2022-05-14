@@ -43,7 +43,7 @@ clean:
 dep: get-nginx get-ssl get-zlib get-pcre get-brotli
 
 get-nginx:
-	git clone --depth 1 https://github.com/VKCOM/nginx-quic.git $(nginx_path)
+	git clone --depth 1 https://github.com/CSUSTers/nginx-quic.git $(nginx_path)
 
 get-ssl:
 	git clone --depth 1 https://github.com/google/boringssl.git $(lib_path)/$(boringssl)
