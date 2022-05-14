@@ -1,38 +1,6 @@
-.PHONY: dep get-nginx get-ssl build-ssl get-zlib get-pcre get-brotli set-pcre build install clean
+.PHONY: dep build install clean
 
-PROCS ?= 1
-compile_process := $(PROCS)
-
-group = nginx
-user = nginx
-
-base_pass = $(PWD)
-lib_path = lib
-
-nginx = nginx-1.20.1
-nginx_path = $(lib_path)/$(nginx)
-nginx_url = http://nginx.org/download/nginx-1.20.1.tar.gz
-nginx_file = lib/nginx.tar.gz
-
-zlib = zlib-1.2.11
-zlib_url = http://zlib.net/zlib-1.2.11.tar.gz
-zlib_file = lib/zlib.tar.gz
-
-pcre = pcre-8.45
-pcre_url = https://ftp.pcre.org/pub/pcre/pcre-8.45.tar.gz
-pcre_file = lib/pcre-8.45.tar.gz
-
-brotli = brotli
-brotli_url = https://github.com/google/ngx_brotli.git
-brotli_lib = lib/brotli
-
-aio = libaio
-aio_url = https://pagure.io/libaio/archive/libaio-0.3.112/libaio-libaio-0.3.112.tar.gz
-aio_file = lib/libaio.tar.gz
-
-boringssl = boringssl
-ssl_lib = $(boringssl)/.openssl/lib
-ssl_include = $(boringssl)/.openssl/include/openssl
+include conf.mk requires.mk
 
 .DEFAULT_GOAL := build
 
@@ -41,49 +9,6 @@ clean:
 	rm -rf $(nginx_file) $(nginx) $(boringssl) $(zlib) $(pcre) $(brotli)
 
 dep: get-nginx get-ssl get-zlib get-pcre get-brotli
-get-nginx:
-	curl $(nginx_url) -o $(nginx_file)
-	tar zxf $(nginx_file) -C lib
-	rm $(nginx_file)
-
-get-ssl:
-	git clone --depth 1 https://github.com/google/boringssl.git $(lib_path)/$(boringssl)
-
-get-zlib:
-	curl $(zlib_url) -o $(zlib_file)
-	tar zxf $(zlib_file) -C lib
-	rm $(zlib_file)
-
-get-pcre:
-	curl $(pcre_url) -o $(pcre_file)
-	tar zxf $(pcre_file) -C lib
-	rm $(pcre_file)
-
-get-brotli:
-	git clone --depth 1 $(brotli_url) $(brotli_lib)
-	cd $(brotli_lib) && \
-		git submodule update --init && \
-		chmod +x config filter/config static/config
-
-# get-aio:
-# 	curl $(aio_url) -o $(aio_file)
-# 	mkdir ./lib/$(aio)
-# 	tar zxvf $(aio_file) -C ./lib/$(aio)
-
-build-ssl:
-	cd $(lib_path)/$(boringssl) && \
-		mkdir -p build .openssl/lib
-	cd $(lib_path)/$(boringssl) && \
-		ln -sf `pwd`/include .openssl/include \
-		# && touch .openssl/include/openssl/ssl.h
-	cd $(lib_path)/$(boringssl) && cmake -S ./ -B build/ -DCMAKE_BUILD_TYPE=Release
-	cd $(lib_path)/$(boringssl) && make -C build/ -j $(compile_process)
-	cd $(lib_path)/$(boringssl) && \
-		cp build/crypto/libcrypto.a build/ssl/libssl.a .openssl/lib
-
-set-pcre:
-	cd $(lib_path)/$(pcre) && \
-	./configure --enable-jit 
 
 build: set-pcre build-ssl
 	cd $(nginx_path) && \
