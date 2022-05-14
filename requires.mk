@@ -26,7 +26,7 @@ ssl_lib = $(boringssl)/.openssl/lib
 ssl_include = $(boringssl)/.openssl/include/openssl
 
 get-nginx:
-	curl $(nginx_url) -o $(nginx_file)
+	curl -L $(nginx_url) -o $(nginx_file)
 	tar zxf $(nginx_file) -C lib
 	rm $(nginx_file)
 
@@ -34,12 +34,12 @@ get-ssl:
 	git clone --depth 1 https://github.com/google/boringssl.git $(lib_path)/$(boringssl)
 
 get-zlib:
-	curl $(zlib_url) -o $(zlib_file)
+	curl -L $(zlib_url) -o $(zlib_file)
 	tar zxf $(zlib_file) -C lib
 	rm $(zlib_file)
 
 get-pcre:
-	curl $(pcre_url) -o $(pcre_file)
+	curl -L $(pcre_url) -o $(pcre_file)
 	tar zxf $(pcre_file) -C lib
 	rm $(pcre_file)
 
