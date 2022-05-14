@@ -5,7 +5,7 @@ nginx_path = $(lib_path)/$(nginx)
 nginx_url = http://nginx.org/download/nginx-1.20.1.tar.gz
 nginx_file = lib/nginx.tar.gz
 
-zlib = zlib-1.2.11
+zlib = zlib-1.2.12
 zlib_url = http://zlib.net/zlib-1.2.12.tar.gz
 zlib_file = lib/$(zlib).tar.gz
 
