@@ -4,6 +4,10 @@ include conf.mk requires.mk
 
 .DEFAULT_GOAL := build
 
+# nginx path for nginx-quic
+nginx = nginx
+nginx_path = $(lib_path)/$(nginx)
+
 clean:
 	cd $(lib_path); \
 	rm -rf $(nginx_file) $(nginx) $(boringssl) $(zlib) $(pcre) $(brotli)
