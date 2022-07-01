@@ -40,7 +40,7 @@ build: set-pcre build-ssl
 		--with-http_v3_module \
 		--with-http_quic_module \
 		--with-stream_quic_module \
-    	--with-http_addition_module \
+		--with-http_addition_module \
 		--with-http_gunzip_module \
 		--with-http_gzip_static_module \
 		--with-http_mp4_module \
