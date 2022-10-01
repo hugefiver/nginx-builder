@@ -32,11 +32,11 @@ get-nginx:
 
 get-ssl:
 	if [ -d "$(lib_path)/$(boringssl)" ]; then \
-		cd $(lib_path)/$(boringssl) \
-		git pull --recurse-submodules \
+		cd $(lib_path)/$(boringssl) && \
+		git pull --recurse-submodules; \
 	else \
-		git clone --depth 1 https://github.com/google/boringssl.git $(lib_path)/$(boringssl) \
-	fi
+		git clone --depth 1 https://github.com/google/boringssl.git $(lib_path)/$(boringssl); \
+	fi;
 	
 
 get-zlib:
