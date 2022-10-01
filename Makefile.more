@@ -14,8 +14,13 @@ clean:
 
 dep: get-nginx-quic get-ssl get-zlib get-pcre get-brotli
 
-get-nginx-quic:
-	git clone --depth 1 https://github.com/CSUSTers/nginx-quic.git $(nginx_path)
+get-nginx:
+	if [ -d "$(nginx_path)" ]; then \
+		cd $(nginx_path) \
+		git pull --recurse-submodules \
+	else \
+		git clone --depth 1 https://github.com/CSUSTers/nginx-quic.git $(nginx_path) \
+	fi
 
 build: set-pcre build-ssl
 	cd $(nginx_path) && \
