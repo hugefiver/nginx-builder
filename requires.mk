@@ -1,8 +1,8 @@
 .PHONY: get-nginx get-ssl get-zlib get-pcre build-ssl get-brotli set-pcre
 
-nginx = nginx-1.21.6
+nginx = nginx-1.23.1
 nginx_path = $(lib_path)/$(nginx)
-nginx_url = http://nginx.org/download/nginx-1.21.6.tar.gz
+nginx_url = https://nginx.org/download/nginx-1.23.1.tar.gz
 nginx_file = lib/nginx.tar.gz
 
 zlib = zlib-1.2.12
@@ -18,7 +18,7 @@ brotli_url = https://github.com/google/ngx_brotli.git
 brotli_lib = lib/brotli
 
 aio = libaio
-aio_url = https://pagure.io/libaio/archive/libaio-0.3.112/libaio-libaio-0.3.112.tar.gz
+aio_url = https://pagure.io/libaio/archive/libaio-0.3.113/libaio-libaio-0.3.113.tar.gz
 aio_file = lib/libaio.tar.gz
 
 boringssl = boringssl
@@ -31,7 +31,13 @@ get-nginx:
 	rm $(nginx_file)
 
 get-ssl:
-	git clone --depth 1 https://github.com/google/boringssl.git $(lib_path)/$(boringssl)
+	if [ -d "$(lib_path)/$(boringssl)" ]; then \
+		cd $(lib_path)/$(boringssl) \
+		git pull --recurse-submodules \
+	else \
+		git clone --depth 1 https://github.com/google/boringssl.git $(lib_path)/$(boringssl) \
+	fi
+	
 
 get-zlib:
 	curl -L $(zlib_url) -o $(zlib_file)
