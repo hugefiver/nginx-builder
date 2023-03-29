@@ -1,16 +1,16 @@
 .PHONY: get-nginx get-ssl get-zlib get-pcre build-ssl get-brotli set-pcre
 
-nginx = nginx-1.23.1
+nginx = nginx-1.23.4
 nginx_path = $(lib_path)/$(nginx)
-nginx_url = https://nginx.org/download/nginx-1.23.1.tar.gz
+nginx_url = https://nginx.org/download/nginx-1.23.4.tar.gz
 nginx_file = lib/nginx.tar.gz
 
-zlib = zlib-1.2.12
-zlib_url = http://zlib.net/zlib-1.2.12.tar.gz
+zlib = zlib-1.2.13
+zlib_url = http://zlib.net/zlib-1.2.13.tar.gz
 zlib_file = lib/$(zlib).tar.gz
 
-pcre = pcre2-10.40
-pcre_url = https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.40/pcre2-10.40.tar.gz
+pcre = pcre2-10.42
+pcre_url = https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.42/pcre2-10.42.tar.gz
 pcre_file = lib/$(pcre).tar.gz
 
 brotli = brotli
