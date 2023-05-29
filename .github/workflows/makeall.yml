@@ -10,8 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./make_default
+        working-directory: .
     steps:
+      -
+        name: CD sub folder
+        run: mkdir -p make_default && cd make_default
+
       - 
         name: Get source
         uses: actions/checkout@v2
@@ -34,8 +38,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./make_quic
+        working-directory: .
     steps:
+      -
+        name: CD sub folder
+        run: mkdir -p make_quic && cd make_quic
+        
       - 
         name: Get source
         uses: actions/checkout@v2
@@ -58,8 +66,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./make_more
+        working-directory: .
     steps:
+      -
+        name: CD sub folder
+        run: mkdir -p make_more && cd make_more
+        
       - 
         name: Get source
         uses: actions/checkout@v2
