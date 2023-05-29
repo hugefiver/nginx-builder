@@ -5,18 +5,13 @@ on:
     branches: [ master ]
 
 jobs:
-  make-default:
-    name: "Make Default"
+  make-all:
+    name: "Make All"
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./make_default
-    steps:
-      -
-        name: mkdir
-        run: mkdir -p make_default
         working-directory: .
-
+    steps:
       - 
         name: Get source
         uses: actions/checkout@v2
