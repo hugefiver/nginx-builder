@@ -27,6 +27,7 @@ build: set-pcre build-ssl
 		--with-http_auth_request_module \
 		--with-http_ssl_module \
 		--with-http_v2_module \
+		--with-http_v3_module \
 		--with-http_realip_module \
 		--with-http_addition_module \
 		--with-pcre=../$(pcre) --with-pcre-jit \

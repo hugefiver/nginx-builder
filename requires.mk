@@ -1,8 +1,8 @@
 .PHONY: get-nginx get-ssl get-zlib get-pcre build-ssl get-brotli set-pcre
 
-nginx = nginx-1.23.4
+nginx = nginx-1.25.0
 nginx_path = $(lib_path)/$(nginx)
-nginx_url = https://nginx.org/download/nginx-1.23.4.tar.gz
+nginx_url = https://nginx.org/download/nginx-1.25.0.tar.gz
 nginx_file = lib/nginx.tar.gz
 
 zlib = zlib-1.2.13
@@ -38,7 +38,6 @@ get-ssl:
 		git clone --depth 1 https://github.com/google/boringssl.git $(lib_path)/$(boringssl); \
 	fi;
 	
-
 get-zlib:
 	curl -L $(zlib_url) -o $(zlib_file)
 	tar zxf $(zlib_file) -C lib

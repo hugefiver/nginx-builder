@@ -4,23 +4,11 @@ include conf.mk requires.mk
 
 .DEFAULT_GOAL := build
 
-# nginx path for nginx-quic
-nginx = nginx
-nginx_path = $(lib_path)/$(nginx)
-
 clean:
 	cd $(lib_path); \
 	rm -rf $(nginx_file) $(nginx) $(boringssl) $(zlib) $(pcre) $(brotli)
 
-dep: get-nginx-quic get-ssl get-zlib get-pcre get-brotli
-
-get-nginx:
-	if [ -d "$(nginx_path)" ]; then \
-		cd $(nginx_path) && \
-		git pull --recurse-submodules; \
-	else \
-		git clone --depth 1 https://github.com/CSUSTers/nginx-quic.git $(nginx_path); \
-	fi;
+dep: get-nginx get-ssl get-zlib get-pcre get-brotli
 	
 build: set-pcre build-ssl
 	cd $(nginx_path) && \

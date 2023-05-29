@@ -1,0 +1,77 @@
+name: Make All
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  make-default:
+    name: "Make Default"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+      - 
+        name: Get source
+        uses: actions/checkout@v2
+
+      - 
+        name: Get development tools
+        run: sudo apt install golang cmake git gcc -y
+
+      - 
+        name: Get deps
+        run: make clean && make dep
+
+      - 
+        name: Build
+        run: make compile_process=4 build
+
+  
+  make-quic:
+    name: "Make Quic"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+      - 
+        name: Get source
+        uses: actions/checkout@v2
+
+      - 
+        name: Get development tools
+        run: sudo apt install golang cmake git gcc -y
+
+      - 
+        name: Get deps
+        run: make clean && make dep
+
+      - 
+        name: Build
+        run: make -f Makefile.quic compile_process=4 build
+
+    
+make-more:
+    name: "Make More"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+      - 
+        name: Get source
+        uses: actions/checkout@v2
+
+      - 
+        name: Get development tools
+        run: sudo apt install golang cmake git gcc -y
+
+      - 
+        name: Get deps
+        run: make clean && make dep
+
+      - 
+        name: Build
+        run: make -f Makefile.more compile_process=4 build
