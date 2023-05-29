@@ -10,11 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: .
+        working-directory: ./make_default
     steps:
       -
-        name: CD sub folder
-        run: mkdir -p make_default && cd make_default
+        name: mkdir
+        run: mkdir -p make_default
+        working-directory: .
 
       - 
         name: Get source
@@ -38,11 +39,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: .
+        working-directory: ./make_quic
     steps:
       -
-        name: CD sub folder
-        run: mkdir -p make_quic && cd make_quic
+        name: mkdir
+        run: mkdir -p make_quic
+        working-directory: .
         
       - 
         name: Get source
@@ -66,11 +68,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: .
+        working-directory: ./make_more
     steps:
       -
-        name: CD sub folder
-        run: mkdir -p make_more && cd make_more
+        name: mkdir
+        run: mkdir -p make_more
+        working-directory: .
         
       - 
         name: Get source
