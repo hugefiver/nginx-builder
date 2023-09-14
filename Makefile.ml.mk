@@ -19,7 +19,7 @@ get-nginx:
 		cd $(nginx_path) && \
 		git pull --recurse-submodules; \
 	else \
-		git clone --depth 1 https://github.com/CSUSTers/nginx-quic.git $(nginx_path); \
+		git clone --depth 1 https://github.com/nginx/nginx.git $(nginx_path); \
 	fi;
 	
 build: set-pcre build-ssl
