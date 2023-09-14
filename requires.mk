@@ -2,7 +2,7 @@
 
 nginx = nginx-1.25.2
 nginx_path = $(lib_path)/$(nginx)
-nginx_url = https://nginx.org/download/nginx-1.25.0.tar.gz
+nginx_url = https://nginx.org/download/nginx-1.25.2.tar.gz
 nginx_file = lib/nginx.tar.gz
 
 zlib = zlib-1.3
