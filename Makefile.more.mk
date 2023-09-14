@@ -12,7 +12,7 @@ dep: get-nginx get-ssl get-zlib get-pcre get-brotli
 	
 build: set-pcre build-ssl
 	cd $(nginx_path) && \
-	./auto/configure \
+	./configure \
 		--prefix=/opt/nginx \
 		--sbin-path=/usr/sbin/nginx \
 		--user=nginx --group=nginx \
