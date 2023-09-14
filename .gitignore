@@ -4,6 +4,7 @@ lib/nginx*
 lib/boringssl
 lib/pcre*
 lib/zlib*
+lib/brotli*
 
 # log files
 **/*.log
