@@ -61,7 +61,8 @@ build-ssl:
 		ln -sf `pwd`/include .openssl/include \
 		# && touch .openssl/include/openssl/ssl.h
 	cd $(lib_path)/$(boringssl) && cmake -S ./ -B build/ -DCMAKE_BUILD_TYPE=Release
-	cd $(lib_path)/$(boringssl) && make -C build/ -j $(compile_process)
+	# cd $(lib_path)/$(boringssl) && make -C build/ -j $(compile_process)
+	cd $(lib_path)/$(boringssl) && make -C build/ -j $(compile_process) ssl crypto
 	cd $(lib_path)/$(boringssl) && \
 		cp build/crypto/libcrypto.a build/ssl/libssl.a .openssl/lib
 
