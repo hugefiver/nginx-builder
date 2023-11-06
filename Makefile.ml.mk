@@ -46,8 +46,8 @@ build: set-pcre build-ssl
 		--with-http_v3_module \
 		--with-pcre=../$(pcre) --with-pcre-jit \
 		--with-zlib=../$(zlib) \
-		--with-openssl=../$(boringssl)\
 		--add-module=../$(brotli)
+		# --with-openssl=../$(boringssl)\
 	touch $(lib_path)/$(boringssl)/include/openssl/ssl.h
 	cd $(nginx_path) && \
 		make -j $(compile_process)
