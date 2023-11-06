@@ -30,12 +30,12 @@ jobs:
 
       - 
         name: Build more
-        run: make -f Makefile.more compile_process=4 build
+        run: make -f Makefile.more.mk compile_process=4 build
 
       -
         name: Clean for building quic
-        run: make clean && make -f Makefile.quic dep
+        run: make -f Makefile.more.mk clean && make -f Makefile.ml.mk dep
         
       - 
         name: Build quic
-        run: make -f Makefile.quic compile_process=4 build
+        run: make -f Makefile.ml.mk compile_process=4 build
