@@ -1,16 +1,16 @@
 .PHONY: get-nginx get-ssl get-zlib get-pcre build-ssl get-brotli set-pcre
 
-nginx = nginx-1.25.3
+nginx = nginx-1.25.4
 nginx_path = $(lib_path)/$(nginx)
-nginx_url = https://nginx.org/download/nginx-1.25.3.tar.gz
+nginx_url = https://nginx.org/download/nginx-1.25.4.tar.gz
 nginx_file = lib/nginx.tar.gz
 
-zlib = zlib-1.3
-zlib_url = http://zlib.net/zlib-1.3.tar.gz
+zlib = zlib-1.3.1
+zlib_url = http://zlib.net/zlib-1.3.1.tar.gz
 zlib_file = lib/$(zlib).tar.gz
 
-pcre = pcre2-10.42
-pcre_url = https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.42/pcre2-10.42.tar.gz
+pcre = pcre2-10.43
+pcre_url = https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.43/pcre2-10.43.tar.gz
 pcre_file = lib/$(pcre).tar.gz
 
 brotli = brotli
@@ -49,17 +49,22 @@ get-pcre:
 	rm $(pcre_file)
 
 get-brotli:
-	git clone --depth 1 $(brotli_url) $(brotli_lib)
-	cd $(brotli_lib) && \
-		git submodule update --init && \
-		chmod +x config filter/config static/config
+	if [ -d "$(brotli_lib)" ]; then \
+		cd $(brotli_lib) && \
+		git pull --recurse-submodules; \
+	else \
+		git clone --depth 1 $(brotli_url) $(brotli_lib) \
+		cd $(brotli_lib) && \
+			git submodule update --init && \
+			chmod +x config filter/config static/config; \
+	fi;
 
 build-ssl:
 	cd $(lib_path)/$(boringssl) && \
 		mkdir -p build .openssl/lib
 	cd $(lib_path)/$(boringssl) && \
-		ln -sf `pwd`/include .openssl/include \
-		# && touch .openssl/include/openssl/ssl.h
+		ln -sf `pwd`/include .openssl/ \
+		&& touch .openssl/include/openssl/ssl.h
 	cd $(lib_path)/$(boringssl) && cmake -S ./ -B build/ -DCMAKE_BUILD_TYPE=Release
 	# cd $(lib_path)/$(boringssl) && make -C build/ -j $(compile_process)
 	cd $(lib_path)/$(boringssl) && make -C build/ -j $(compile_process) ssl crypto

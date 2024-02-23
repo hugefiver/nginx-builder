@@ -20,8 +20,8 @@ build: set-pcre build-ssl
 		--conf-path=/etc/nginx/nginx.conf \
 		--error-log-path=/var/log/nginx/error.log \
 		--http-log-path=/var/log/nginx/access.log \
-		--with-cc-opt='-Wno-error -O2 -I../${boringssl}/.openssl/include' \
-		--with-ld-opt='-L../${boringssl}/.openssl/lib' \
+		--with-cc-opt='-Wno-error -O2 -I../$(boringssl)/.openssl/include' \
+		--with-ld-opt='-L../$(boringssl)/.openssl/lib' \
 		--with-file-aio \
 		--with-stream \
 		--with-stream_ssl_module \
