@@ -31,12 +31,22 @@ get-nginx:
 	rm $(nginx_file)
 
 get-ssl:
+	# if [ -d "$(lib_path)/$(boringssl)" ]; then \
+	# 	cd $(lib_path)/$(boringssl) && \
+	# 	git pull --recurse-submodules; \
+	# else \
+	# 	git clone --depth 1 https://github.com/google/boringssl.git $(lib_path)/$(boringssl); \
+	# fi;
+
 	if [ -d "$(lib_path)/$(boringssl)" ]; then \
 		cd $(lib_path)/$(boringssl) && \
-		git pull --recurse-submodules; \
+		git fetch origin master;\
 	else \
-		git clone --depth 1 https://github.com/google/boringssl.git $(lib_path)/$(boringssl); \
+		git clone --branch master  https://github.com/google/boringssl.git $(lib_path)/$(boringssl); \
 	fi;
+	cd $(lib_path)/$(boringssl) && \
+	git reset --hard 0568c2c1dbff4e1de4d5a63fbaf7d13925df27fa
+	git submodule update --init --recursive
 	
 get-zlib:
 	curl -L $(zlib_url) -o $(zlib_file)
@@ -53,7 +63,7 @@ get-brotli:
 		cd $(brotli_lib) && \
 		git pull --recurse-submodules; \
 	else \
-		git clone --depth 1 $(brotli_url) $(brotli_lib) \
+		git clone --depth 1 $(brotli_url) $(brotli_lib); \
 		cd $(brotli_lib) && \
 			git submodule update --init && \
 			chmod +x config filter/config static/config; \
@@ -64,7 +74,7 @@ build-ssl:
 		mkdir -p build .openssl/lib
 	cd $(lib_path)/$(boringssl) && \
 		ln -sf `pwd`/include .openssl/ \
-		&& touch .openssl/include/openssl/ssl.h
+		# && touch .openssl/include/openssl/ssl.h
 	cd $(lib_path)/$(boringssl) && cmake -S ./ -B build/ -DCMAKE_BUILD_TYPE=Release
 	# cd $(lib_path)/$(boringssl) && make -C build/ -j $(compile_process)
 	cd $(lib_path)/$(boringssl) && make -C build/ -j $(compile_process) ssl crypto
