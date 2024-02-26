@@ -18,7 +18,7 @@ jobs:
 
       - 
         name: Get development tools
-        run: sudo apt install golang cmake git gcc -y
+        run: sudo apt update && sudo apt install golang cmake git gcc -y
 
       - 
         name: Get deps
