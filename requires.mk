@@ -1,8 +1,8 @@
 .PHONY: get-nginx get-ssl get-zlib get-pcre build-ssl get-brotli set-pcre
 
-nginx = nginx-1.25.4
+nginx = nginx-1.26.1
 nginx_path = $(lib_path)/$(nginx)
-nginx_url = https://nginx.org/download/nginx-1.25.4.tar.gz
+nginx_url = https://nginx.org/download/nginx-1.26.1.tar.gz
 nginx_file = lib/nginx.tar.gz
 
 zlib = zlib-1.3.1
